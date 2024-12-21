@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodawanie Divów</title>
+    <style>
+        .custom-div {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 5px;
+            background-color: #f0f0f0;
+        }
+    </style>
+    <script src="lightbox-plus-jquery.js"></script>
+    <link rel="stylesheet" href="lightbox.css" type="text/css">
+</head>
+<body>
+    <button id="addDiv">Dodaj Diva</button>
+    <div id="row"></div>
+
+    <script>
+        // Pobierz referencję do elementów
+        const addButton = document.getElementById('addDiv');
+        const container = document.getElementById('row');
+
+        // Funkcja dodająca diva
+        function addDiv() {
+            for (let i = 1; i <= 9; i++) {
+                const div_col = document.createElement('div');
+                const div_image = document.createElement('div');
+                div_col.classList.add('col-md-4');
+                div_image.classList.add('thumbnail')
+                var link = 'img/koty/kot' + i + '.jpeg';
+                var data = 'Kot no.' + i;
+                const a_img = document.createElement('a');
+                a_img.href = link;
+                a_img.setAttribute('data-lightbox', 'mygallery');
+                a_img.setAttribute('data-title', 'Kot no.1');
+
+                const newImage = document.createElement('img');
+                newImage.src = link; 
+                newImage.alt = 'kitty ' + 1;
+                
+                a_img.appendChild(newImage);
+                div_image.appendChild(a_img);
+                div_col.appendChild(div_image);
+                container.appendChild(div_col);
+            } 
+        }
+
+        addButton.addEventListener('click', addDiv);
+    </script>
+</body>
+</html>
