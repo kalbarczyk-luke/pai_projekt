@@ -64,6 +64,10 @@ body {
     padding: 0 0 15px 0;
     border: none;
     border-radius: 0;
+    img {
+      border: 1px solid #303030;
+      border-radius: 10px;
+    }
   }
   .thumbnail img {
     width: 100%;
@@ -131,7 +135,7 @@ body {
   .navbar {
     margin-bottom: 0;
     background-color: #247b6d;
-    z-index: 9999;
+    /* z-index: 9999; */
     border: 0;
     font-size: 12px !important;
     line-height: 1.42857143 !important;
@@ -144,12 +148,20 @@ body {
     margin-right: 10px;
   }
   .navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #28ad97 !important;
-    background-color: #fff !important;
+    color: #fff !important;
+    background-color: #1a6b5d !important;
   }
   .navbar-default .navbar-toggle {
     border-color: transparent;
     color: #fff !important;
+  }
+  .col-sm-5 {
+    text-align: center;
+    font-size: large;
+    margin-top: 60px;
+  }
+  .col-sm-8 p {
+    color: #303030;
   }
   footer .glyphicon {
     font-size: 20px;
