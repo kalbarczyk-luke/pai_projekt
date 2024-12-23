@@ -88,7 +88,7 @@
             $rating = $_POST['ocena'];
             // echo $user . $title . $year . $rating;
 
-            require_once('connectDB.php');
+            require_once('connDB.php');
             // Check connection
             if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
