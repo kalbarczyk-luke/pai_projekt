@@ -14,6 +14,7 @@
   <script type="text/javascript" src="main.js"></script>
   <link rel="stylesheet" href="lightbox.css" type="text/css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="filmstyles.css">
   <link rel="icon" type="image/x-icon" href="img/kotek.gif">
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -54,10 +55,62 @@
 <div id="about" class="container-fluid">
   <div class="row">
     <div class="col-sm-8">
-      <p>Sample text</p>
+        <form action="filmy.php#about" method="get">
+            <p>Podaj login: <input name="login" type="text"/></p>
+            <p>Podaj hasło: <input name="pass" type="password"/></p> 
+            <input type="submit" name="show_button" value="Pokaż filmy" id="submit">
+        </form>
+        <?php
+        if (isset($_GET['show_button']) && isset($_GET['login']) && isset($_GET['pass'])) { 
+            $user = $_GET['login'];
+            $pass = $_GET['pass'];
+
+            require_once('connectDB.php');
+            // Check connection
+            if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+            }
+            // "LOGOWANIE"
+            $q = "SELECT * FROM uzytkownicy WHERE name='" . $user . "'";
+            $r = @mysqli_query($conn, $q);
+            if (mysqli_num_rows($r) > 0) {
+                while($row = mysqli_fetch_array($r)) {
+                    $read_pass = $row['pass'];
+                    $read_user_id = $row['id'];
+                }
+                if ($pass == $read_pass){
+                    echo "<h4>Zalogowano jako ".$user."</h4>";
+                    $logged_in = true;
+                } else {
+                    echo "<h4>Podano błędne hasło!</h4>";
+                    $logged_in = false;
+                }
+            } else {
+                echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
+                $logged_in = false;
+            }
+            // "WYSWIETLANIE FILMOW"
+            if ($logged_in){
+                $q = "SELECT * FROM filmy WHERE user_id=" . $read_user_id;
+                $r = @mysqli_query($conn, $q);
+                if (mysqli_num_rows($r) > 0) {
+                    while($row = mysqli_fetch_array($r)) {
+                        echo "<br><p>";
+                        echo "<span class = 'filmtitle'>";
+                        echo $row["title"] . "<br>";
+                        echo "</span>";
+                        echo $row["date"] . "<br>";
+                        echo $row["rating"] . "<br>";
+                        echo "</p>";
+                    }
+                } else {
+                    echo "<p>Brak danych do wyświetlenia.</p>";
+                }
+                $conn->close();
+            }
+        }
+        ?> 
     <div class="col-sm-4">
-      <a href="img/kotek.gif" data-lightbox="mygallery" data-title="Kotek świąteczny"><img src="img/kotek.gif" alt="kotek"></a> 
-      <a href="img/rudzik.gif" data-lightbox="mygallery" data-title="Rudzik świąteczny"><img src="img/rudzik.gif" alt="rudzik"></a> 
     </div>
   </div>
 </div>
@@ -73,20 +126,6 @@
     </div>
     <div class="col-sm-7 slideanim">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2608.489232726419!2d18.615800351979498!3d54.37642734153131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd749704dcf0f3%3A0x53f69bae12ca3e75!2sMy%20Kebab!5e0!3m2!1spl!2spl!4v1734826888041!5m2!1spl!2spl" width="800" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <!-- <div class="row">
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-        </div>
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
-        </div>
-      </div>
-      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-      <div class="row">
-        <div class="col-sm-12 form-group">
-          <button class="btn btn-default pull-right" type="submit">Send</button>
-        </div>
-      </div> -->
     </div> 
   </div>
 </div>
