@@ -75,7 +75,7 @@
             $user = $_GET['login'];
             $pass = $_GET['pass'];
 
-            require_once('connDB.php');
+            require_once('connectBD.php');
             // Check connection
             if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
