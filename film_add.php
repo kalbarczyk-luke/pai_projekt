@@ -56,7 +56,6 @@
 <div class="jumbotron text-center">
   <h1>Baza danych z filmami</h1>
   <h3>Dodawanie nowych filmów.</h3>
-  <p>WORK IN PROGRESS</p>
 </div>
 
 <!-- Container (About Section) -->
@@ -66,10 +65,6 @@
         <h4>Dodaj film - Logowanie</h4>
         <!-- <button class="film-menu">Dodaj użytkownika</button> -->
         <h2></h2>
-        <!-- <form action="film_add.php#about" method="get">
-            <p>Podaj login: <input name="login" type="text"/></p>
-            <p>Podaj hasło: <input name="pass" type="password"/></p>
-        </form> -->
         <form action='film_add.php#about' method='post'>
             <br>
             <p>Podaj login: <input name="login" type="text"/></p>
@@ -143,7 +138,9 @@
       <p><span class="glyphicon glyphicon-envelope"></span> s185801@student.pg.edu.pl</p>
     </div>
     <div class="col-sm-7 slideanim">
+      <div class="google-maps">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2608.489232726419!2d18.615800351979498!3d54.37642734153131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd749704dcf0f3%3A0x53f69bae12ca3e75!2sMy%20Kebab!5e0!3m2!1spl!2spl!4v1734826888041!5m2!1spl!2spl" width="800" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
     </div> 
   </div>
 </div>

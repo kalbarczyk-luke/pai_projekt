@@ -56,7 +56,6 @@
 <div class="jumbotron text-center">
   <h1>Baza danych z filmami</h1>
   <h3>Usuwanie filmów z bazy danych.</h3>
-  <p>WORK IN PROGRESS</p>
 </div>
 
 <!-- Container (About Section) -->
@@ -66,15 +65,17 @@
         <h4>Usuń film - Logowanie</h4>
         <!-- <button class="film-menu">Dodaj użytkownika</button> -->
         <h2></h2>
-        <form action="film_show.php#about" method="get">
+        <form action="film_delete.php#about" method="post">
             <p>Podaj login: <input name="login" type="text"/></p>
-            <p>Podaj hasło: <input name="pass" type="password"/></p> 
-            <input type="submit" name="show_button" value="Pokaż filmy" id="submit">
+            <p>Podaj hasło: <input name="pass" type="password"/></p><br>
+            <p>Podaj film, który chcesz usunąć z twojej bazy:<br> <input name="name" type="text"/></p>
+            <input type="submit" name="del_button" value="Usuń film" id="submit">
         </form>
         <?php
-        if (isset($_GET['show_button']) && isset($_GET['login']) && isset($_GET['pass'])) { 
-            $user = $_GET['login'];
-            $pass = $_GET['pass'];
+        if (isset($_POST['del_button']) && isset($_POST['login']) && isset($_POST['pass'])) { 
+            $user = $_POST['login'];
+            $pass = $_POST['pass'];
+            $film = $_POST['name'];
 
             require_once('connectBD.php');
             // Check connection
@@ -100,25 +101,18 @@
                 echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
                 $logged_in = false;
             }
-            // "WYSWIETLANIE FILMOW"
+            // "USUSWANIE FILMOW"
             if ($logged_in){
-                $q = "SELECT * FROM filmy WHERE user_id=" . $read_user_id;
+                $q = "DELETE FROM filmy WHERE (user_id='" . $read_user_id . "' AND title='".$film."')";
                 $r = @mysqli_query($conn, $q);
-                if (mysqli_num_rows($r) > 0) {
-                    while($row = mysqli_fetch_array($r)) {
-                        echo "<br><p>";
-                        echo "<span class = 'filmtitle'>";
-                        echo $row["title"] . "<br>";
-                        echo "</span>";
-                        echo $row["year"] . "<br>";
-                        echo $row["rating"] . "<br>";
-                        echo "</p>";
-                    }
-                } else {
-                    echo "<p>Brak danych do wyświetlenia.</p>";
+                if ($r) {
+                  echo "<h4>Pomyślnie usunięto film ".$film."!</h4>";
+                }
+                else {
+                    echo "Error" . mysqli_error($conn);
                 }
                 $conn->close();
-            }
+              }
         }
         ?> 
     <div class="col-sm-4">
@@ -136,7 +130,9 @@
       <p><span class="glyphicon glyphicon-envelope"></span> s185801@student.pg.edu.pl</p>
     </div>
     <div class="col-sm-7 slideanim">
+    <div class="google-maps">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2608.489232726419!2d18.615800351979498!3d54.37642734153131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd749704dcf0f3%3A0x53f69bae12ca3e75!2sMy%20Kebab!5e0!3m2!1spl!2spl!4v1734826888041!5m2!1spl!2spl" width="800" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>    
     </div> 
   </div>
 </div>

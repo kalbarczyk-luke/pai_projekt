@@ -56,7 +56,6 @@
 <div class="jumbotron text-center">
   <h1>Baza danych z filmami</h1>
   <h3>Wyświetlanie filmów dodanych przez użytkownika.</h3>
-  <p>WORK IN PROGRESS</p>
 </div>
 
 <!-- Container (About Section) -->
@@ -100,8 +99,45 @@
                 echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
                 $logged_in = false;
             }
+
             // "WYSWIETLANIE FILMOW"
             if ($logged_in){
+              if ($user == 'admin') { // DISPLAY ADMIN DATA
+                $q1 = "SELECT DISTINCT nazwa FROM uzytkownicy WHERE id!=4";
+                $q2 = "SELECT u.nazwa, f.title, f.year, f.rating FROM filmy f JOIN uzytkownicy u ON f.user_id=u.id WHERE user_id!=4";
+                $r1 = @mysqli_query($conn, $q1);
+                $r2 = @mysqli_query($conn, $q2);
+                if (mysqli_num_rows($r1) > 0) {
+                  echo "<span class = 'filmdetails'>";
+                  echo "<p>Dostępni użytkownicy:";
+                  echo "<br><ul class='db-users'>";  
+                  while($row = mysqli_fetch_array($r1)) { echo "<li>" . $row["nazwa"] . "</li>"; }
+                  echo "</ul></p><br>";
+                  echo "</span>";
+                }
+                if (mysqli_num_rows($r2) > 0) {
+                  echo "<span class = 'filmdetails'>";
+                  echo "<p>Dane wszystkich użytkowników:</p>";
+                  echo "</span>";
+                    while($row = mysqli_fetch_array($r2)) {
+                        echo "<p>";
+                        echo "<span class = 'filmtitle'>";
+                        echo $row["title"] . "<br>";
+                        echo "</span>";
+                        echo "<span class = 'filmdetails'>";
+                        echo $row["year"] . "<br>";
+                        for ($x = 1; $x <= $row["rating"]; $x++) {
+                          echo "<span class='glyphicon glyphicon-star gold'></span>  ";
+                        }
+                        echo $row["rating"] . "/5<br>";
+                        echo "Użytkownik: ".$row["nazwa"];  
+                        echo "</span>";
+                        echo "</p><br>";
+                    }
+                } else {
+                    echo "<p>Brak danych do wyświetlenia.</p>";
+                }
+              } else { // DISPLAY USER DATA
                 $q = "SELECT * FROM filmy WHERE user_id=" . $read_user_id;
                 $r = @mysqli_query($conn, $q);
                 if (mysqli_num_rows($r) > 0) {
@@ -110,17 +146,20 @@
                         echo "<span class = 'filmtitle'>";
                         echo $row["title"] . "<br>";
                         echo "</span>";
+                        echo "<span class = 'filmdetails'>";
                         echo $row["year"] . "<br>";
                         for ($x = 1; $x <= $row["rating"]; $x++) {
                             echo "<span class='glyphicon glyphicon-star gold'></span>  ";
                         }
                         echo $row["rating"] . "/5<br>";
+                        echo "</span>";
                         echo "</p>";
                     }
                 } else {
                     echo "<p>Brak danych do wyświetlenia.</p>";
                 }
-                $conn->close();
+              }
+              $conn->close();
             }
         }
         ?> 
@@ -139,7 +178,9 @@
       <p><span class="glyphicon glyphicon-envelope"></span> s185801@student.pg.edu.pl</p>
     </div>
     <div class="col-sm-7 slideanim">
+      <div class="google-maps">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2608.489232726419!2d18.615800351979498!3d54.37642734153131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd749704dcf0f3%3A0x53f69bae12ca3e75!2sMy%20Kebab!5e0!3m2!1spl!2spl!4v1734826888041!5m2!1spl!2spl" width="800" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
     </div> 
   </div>
 </div>

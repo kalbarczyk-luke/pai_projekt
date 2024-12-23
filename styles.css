@@ -48,6 +48,7 @@ h4 {
 }
 .container-fluid.text-center.footer {
   background-color: #f6f6f6;
+  width: 100%;
 }
 .bg-grey {
   background-color: #fff;
@@ -135,7 +136,7 @@ h4 {
 .navbar {
   margin-bottom: 0;
   background-color: #247b6d;
-  /* z-index: 9999; */
+  z-index: 9999;
   border: 0;
   font-size: 12px !important;
   line-height: 1.42857143 !important;
@@ -182,6 +183,15 @@ footer .glyphicon {
 }
 .gold {
   color: #ffd321;
+}
+.db-users {
+  color: #000;
+}
+.google-maps {
+  /* width="800" height="250" */
+  position: relative;
+  height: 30%;
+  overflow: hidden;
 }
 @keyframes slide {
   0% {
