@@ -33,9 +33,6 @@
       <ul class="nav navbar-nav navbar-right">
         <!-- <li><a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li> -->
         <li><a class="navbar-brand" href="galeria.html"><span class="glyphicon glyphicon-picture"></span> Galeria</a></li>  
-        <li>
-            <a class="navbar-brand" href="filmy.php"><span class="glyphicon glyphicon-facetime-video"></span> Filmy</a>
-        </li>  
         <li class="dropdown">
             <a class="navbar-brand" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-facetime-video"></span> Filmy<span class="carret"></span></a>
             <ul class="dropdown-menu">
@@ -57,7 +54,7 @@
 
 <div class="jumbotron text-center">
   <h1>Baza danych z filmami</h1>
-  <h3>Użytkownik może dodawać i oceniać obejrzane przez siebie filmy.</h3>
+  <h3>Wyświetlanie filmów, dodanych przez użytkownika.</h3>
   <p>WORK IN PROGRESS</p>
 </div>
 
@@ -65,9 +62,67 @@
 <div id="about" class="container-fluid">
   <div class="row">
     <div class="col-sm-8">
-        <a href="film_show.php#about"><button class="film-menu">Obejrzane filmy</button></a>
-        <a href="film_add.php#about"><button class="film-menu">Dodaj film</button></a>
-        <a href="film_delete.php#about"><button class="film-menu">Usuń film</button></a>
+        <h4>Twoje filmy - Logowanie</h4>
+        <!-- <button class="film-menu">Dodaj użytkownika</button> -->
+        <h2></h2>
+        <form action="film_show.php#about" method="get">
+            <p>Podaj login: <input name="login" type="text"/></p>
+            <p>Podaj hasło: <input name="pass" type="password"/></p> 
+            <input type="submit" name="show_button" value="Zaloguj się i pokaż filmy" id="submit">
+        </form>
+        <?php
+        if (isset($_GET['show_button']) && isset($_GET['login']) && isset($_GET['pass'])) { 
+            $user = $_GET['login'];
+            $pass = $_GET['pass'];
+
+            require_once('connectDB.php');
+            // Check connection
+            if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+            }
+            // "LOGOWANIE"
+            $q = "SELECT * FROM uzytkownicy WHERE nazwa='" . $user . "'";
+            $r = @mysqli_query($conn, $q);
+            if (mysqli_num_rows($r) > 0) {
+                while($row = mysqli_fetch_array($r)) {
+                    $read_pass = $row['pass'];
+                    $read_user_id = $row['id'];
+                }
+                if ($pass == $read_pass){
+                    echo "<h4>Zalogowano jako ".$user."</h4>";
+                    $logged_in = true;
+                } else {
+                    echo "<h4>Podano błędne hasło!</h4>";
+                    $logged_in = false;
+                }
+            } else {
+                echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
+                $logged_in = false;
+            }
+            // "WYSWIETLANIE FILMOW"
+            if ($logged_in){
+                $q = "SELECT * FROM filmy WHERE user_id=" . $read_user_id;
+                $r = @mysqli_query($conn, $q);
+                if (mysqli_num_rows($r) > 0) {
+                    while($row = mysqli_fetch_array($r)) {
+                        echo "<br><p>";
+                        echo "<span class = 'filmtitle'>";
+                        echo $row["title"] . "<br>";
+                        echo "</span>";
+                        echo $row["year"] . "<br>";
+                        for ($x = 1; $x <= $row["rating"]; $x++) {
+                            echo "<span class='glyphicon glyphicon-star gold'></span>  ";
+                        }
+                        echo $row["rating"] . "/5<br>";
+                        echo "</p>";
+                    }
+                } else {
+                    echo "<p>Brak danych do wyświetlenia.</p>";
+                }
+                $conn->close();
+            }
+        }
+        ?> 
     <div class="col-sm-4">
     </div>
   </div>

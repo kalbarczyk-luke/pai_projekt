@@ -31,7 +31,14 @@
       <ul class="nav navbar-nav navbar-right">
         <!-- <li><a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li> -->
         <li><a class="navbar-brand" href="galeria.html"><span class="glyphicon glyphicon-picture"></span> Galeria</a></li>  
-        <li><a class="navbar-brand" href="filmy.php"><span class="glyphicon glyphicon-facetime-video"></span> Filmy</a></li>  
+        <li class="dropdown">
+          <a class="navbar-brand" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-facetime-video"></span> Filmy<span class="carret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="film_show.php">Filmy</a></li>
+              <li><a href="film_add.php">Dodaj film</a></li>
+              <li><a href="film_delete.php">Usuń film</a></li>
+          </ul>
+        </li>
         <!-- <li><a href="#about">ABOUT</a></li>
         <li><a href="#services">SERVICES</a></li>
         <li><a href="#portfolio">PORTFOLIO</a></li>

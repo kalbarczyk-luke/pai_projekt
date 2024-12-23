@@ -1,9 +1,18 @@
 .filmtitle {
-    color: #f4511e;
-    font-weight: bold;
+  color: #f4511e;
+  font-weight: bold;
 }
 
 #submit {
+  color: #f4511e;
+  font-weight: bold;
+  width: 200px;
+  height: 60px;
+  border: 1px solid #3b3b3b;
+  border-radius: 10px;
+}
+
+.film-menu {
   color: #f4511e;
   font-weight: bold;
   width: 135px;

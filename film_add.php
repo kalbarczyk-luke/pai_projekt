@@ -33,9 +33,6 @@
       <ul class="nav navbar-nav navbar-right">
         <!-- <li><a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li> -->
         <li><a class="navbar-brand" href="galeria.html"><span class="glyphicon glyphicon-picture"></span> Galeria</a></li>  
-        <li>
-            <a class="navbar-brand" href="filmy.php"><span class="glyphicon glyphicon-facetime-video"></span> Filmy</a>
-        </li>  
         <li class="dropdown">
             <a class="navbar-brand" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-facetime-video"></span> Filmy<span class="carret"></span></a>
             <ul class="dropdown-menu">
@@ -57,7 +54,7 @@
 
 <div class="jumbotron text-center">
   <h1>Baza danych z filmami</h1>
-  <h3>Użytkownik może dodawać i oceniać obejrzane przez siebie filmy.</h3>
+  <h3>Dodawanie nowych filmów.</h3>
   <p>WORK IN PROGRESS</p>
 </div>
 
@@ -65,9 +62,92 @@
 <div id="about" class="container-fluid">
   <div class="row">
     <div class="col-sm-8">
-        <a href="film_show.php#about"><button class="film-menu">Obejrzane filmy</button></a>
-        <a href="film_add.php#about"><button class="film-menu">Dodaj film</button></a>
-        <a href="film_delete.php#about"><button class="film-menu">Usuń film</button></a>
+        <h4>Dodaj film - Logowanie</h4>
+        <!-- <button class="film-menu">Dodaj użytkownika</button> -->
+        <h2></h2>
+        <!-- <form action="film_add.php#about" method="get">
+            <p>Podaj login: <input name="login" type="text"/></p>
+            <p>Podaj hasło: <input name="pass" type="password"/></p>
+        </form> -->
+        <form action='film_add.php#about' method='post'>
+            <br>
+            <p>Podaj login: <input name="login" type="text"/></p>
+            <p>Podaj hasło: <input name="pass" type="password"/></p>
+            <p>Podaj tytuł filmu: <input name='tytul' type='text'/></p>
+            <p>Podaj rok produkcji filmu: <input name='rok' type='number' min='1890' max='2050'/></p>
+            <p>Jak oceniasz film (0-5): <input name='ocena' type='number' min='0' max='5'/></p>
+            <input type='submit' name='add_button' value='Dodaj film' id='submit'>
+        </form>
+        
+        <?php //isset($_GET['log_button']) &&
+        if (isset($_POST['login']) && isset($_POST['pass']) && isset($_POST['add_button']) &&  isset($_POST['rok']) && isset($_POST['tytul']) && isset($_POST['ocena'])) {
+            $user = $_POST['login'];
+            $pass = $_POST['pass'];
+            $title = $_POST['tytul'];
+            $year = $_POST['rok'];
+            $rating = $_POST['ocena'];
+            // echo $user . $title . $year . $rating;
+
+            require_once('connectDB.php');
+            // Check connection
+            if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+            }
+            // "LOGOWANIE"
+            $q = "SELECT * FROM uzytkownicy WHERE nazwa='" . $user . "'";
+            $r = @mysqli_query($conn, $q);
+            if (mysqli_num_rows($r) > 0) {
+                while($row = mysqli_fetch_array($r)) {
+                    $read_pass = $row['pass'];
+                    $read_user_id = $row['id'];
+                }
+                if ($pass == $read_pass){
+                    echo "<h4>Zalogowano jako ".$user."</h4>";
+                    $logged_in = true;
+                } else {
+                    echo "<h4>Podano błędne hasło!</h4>";
+                    $logged_in = false;
+                }
+            } else {
+                echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
+                $logged_in = false;
+            }
+
+            // "DODAWANIE FILMOW"
+            if ($logged_in){
+                $q = "INSERT INTO filmy (user_id, title, year, rating) VALUES (".$read_user_id.", '".$title."', ".$year.", ".$rating.")";
+                $r = @mysqli_query($conn, $q);
+                if ($r) {
+                    echo "<h4>Pomyślnie dodano film ".$title."!</h4>";
+                    echo "<p><a href='film_show.php#about'>Przejdź do wyświetlania filmów</a></p>";
+                }
+                else {
+                    echo "Error" . mysqli_error($conn);
+                }
+            }
+        }   
+            
+
+        
+            //     // }
+            //     // $q = "SELECT * FROM filmy WHERE user_id=" . $read_user_id;
+            //     // $r = @mysqli_query($conn, $q);
+            //     // if (mysqli_num_rows($r) > 0) {
+            //     //     while($row = mysqli_fetch_array($r)) {
+            //     //         echo "<br><p>";
+            //     //         echo "<span class = 'filmtitle'>";
+            //     //         echo $row["title"] . "<br>";
+            //     //         echo "</span>";
+            //     //         echo $row["year"] . "<br>";
+            //     //         echo $row["rating"] . "<br>";
+            //     //         echo "</p>";
+            //     //     }
+            //     // } else {
+            //     //     echo "<p>Brak danych do wyświetlenia.</p>";
+            //     // }
+            //     $conn->close();
+            // }
+        ?> 
     <div class="col-sm-4">
     </div>
   </div>
