@@ -63,30 +63,25 @@
 <div id="about" class="container-fluid">
   <div class="row">
     <div class="col-sm-8">
-        <h4>Dodaj film - Logowanie</h4>
+        <h4>Dodaj użytkownika</h4>
         <!-- <button class="film-menu">Dodaj użytkownika</button> -->
         <h2></h2>
         <!-- <form action="film_add.php#about" method="get">
             <p>Podaj login: <input name="login" type="text"/></p>
             <p>Podaj hasło: <input name="pass" type="password"/></p>
         </form> -->
-        <form action='film_add.php#about' method='post'>
+        <form action='film_useradd.php#about' method='post'>
             <br>
-            <p>Podaj login: <input name="login" type="text"/></p>
-            <p>Podaj hasło: <input name="pass" type="password"/></p>
-            <p>Podaj tytuł filmu: <input name='tytul' type='text'/></p>
-            <p>Podaj rok produkcji filmu: <input name='rok' type='number' min='1890' max='2050'/></p>
-            <p>Jak oceniasz film (0-5): <input name='ocena' type='number' min='0' max='5'/></p>
-            <input type='submit' name='add_button' value='Dodaj film' id='submit'>
+            <p>Podaj nowy login: <input name="login" type="text"/></p>
+            <p>Podaj nowe hasło: <input name="pass" type="password"/></p>
+            <input type='submit' name='add_button' value='Dodaj użytkownika' id='submit'>
         </form>
         
         <?php //isset($_GET['log_button']) &&
-        if (isset($_POST['login']) && isset($_POST['pass']) && isset($_POST['add_button']) &&  isset($_POST['rok']) && isset($_POST['tytul']) && isset($_POST['ocena'])) {
-            $user = $_POST['login'];
-            $pass = $_POST['pass'];
-            $title = $_POST['tytul'];
-            $year = $_POST['rok'];
-            $rating = $_POST['ocena'];
+        if (isset($_POST['login']) && isset($_POST['pass']) && isset($_POST['add_button'])) {
+            $new_user = $_POST['login'];
+            $new_pass = $_POST['pass'];
+
             // echo $user . $title . $year . $rating;
 
             require_once('connectBD.php');
@@ -95,31 +90,31 @@
             die("Connection failed: " . mysqli_connect_error());
             }
             // "LOGOWANIE"
-            $q = "SELECT * FROM uzytkownicy WHERE nazwa='" . $user . "'";
-            $r = @mysqli_query($conn, $q);
-            if (mysqli_num_rows($r) > 0) {
-                while($row = mysqli_fetch_array($r)) {
-                    $read_pass = $row['pass'];
-                    $read_user_id = $row['id'];
-                }
-                if ($pass == $read_pass){
-                    echo "<h4>Zalogowano jako ".$user."</h4>";
-                    $logged_in = true;
-                } else {
-                    echo "<h4>Podano błędne hasło!</h4>";
-                    $logged_in = false;
-                }
-            } else {
-                echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
-                $logged_in = false;
-            }
+            // $q = "SELECT * FROM uzytkownicy WHERE nazwa='" . $user . "'";
+            // $r = @mysqli_query($conn, $q);
+            // if (mysqli_num_rows($r) > 0) {
+            //     while($row = mysqli_fetch_array($r)) {
+            //         $read_pass = $row['pass'];
+            //         $read_user_id = $row['id'];
+            //     }
+            //     if ($pass == $read_pass){
+            //         echo "<h4>Zalogowano jako ".$user."</h4>";
+            //         $logged_in = true;
+            //     } else {
+            //         echo "<h4>Podano błędne hasło!</h4>";
+            //         $logged_in = false;
+            //     }
+            // } else {
+            //     echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
+            //     $logged_in = false;
+            // }
 
             // "DODAWANIE FILMOW"
-            if ($logged_in){
-                $q = "INSERT INTO filmy (user_id, title, year, rating) VALUES (".$read_user_id.", '".$title."', ".$year.", ".$rating.")";
+            if (true){
+                $q = "INSERT INTO uzytkownicy (nazwa, pass) VALUES ('".$new_user."', '".$new_pass."')";
                 $r = @mysqli_query($conn, $q);
                 if ($r) {
-                    echo "<h4>Pomyślnie dodano film ".$title."!</h4>";
+                    echo "<h4>Pomyślnie dodano użytkownika ".$new_user."!</h4>";
                     echo "<p><a href='film_show.php#about'>Przejdź do wyświetlania filmów</a></p>";
                 }
                 else {

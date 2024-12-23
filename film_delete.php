@@ -39,6 +39,7 @@
                 <li><a href="film_show.php">Filmy</a></li>
                 <li><a href="film_add.php">Dodaj film</a></li>
                 <li><a href="film_delete.php">Usuń film</a></li>
+                <li><a href="film_useradd.php">Dodaj użytkownika</a></li>
             </ul>
         </li>
         <!-- <li><a href="#about">ABOUT</a></li>

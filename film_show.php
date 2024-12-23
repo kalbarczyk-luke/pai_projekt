@@ -39,6 +39,7 @@
                 <li><a href="film_show.php">Filmy</a></li>
                 <li><a href="film_add.php">Dodaj film</a></li>
                 <li><a href="film_delete.php">Usuń film</a></li>
+                <li><a href="film_useradd.php">Dodaj użytkownika</a></li>
             </ul>
         </li>
         <!-- <li><a href="#about">ABOUT</a></li>
@@ -54,7 +55,7 @@
 
 <div class="jumbotron text-center">
   <h1>Baza danych z filmami</h1>
-  <h3>Wyświetlanie filmów, dodanych przez użytkownika.</h3>
+  <h3>Wyświetlanie filmów dodanych przez użytkownika.</h3>
   <p>WORK IN PROGRESS</p>
 </div>
 
