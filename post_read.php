@@ -56,28 +56,29 @@
 </nav>
 
 <div class="jumbotron text-center">
-  <h1>Baza danych z filmami</h1>
-  <h3>Usuwanie filmów z bazy danych.</h3>
+  <h1>Sandbox</h1>
+  <h3>Elementy CMS - dodawanie obrazka do strony.</h3>
 </div>
 
-<!-- Container (About Section) -->
 <div id="about" class="container-fluid">
   <div class="row">
     <div class="col-sm-8">
-        <h4>Usuń film - Logowanie</h4>
-        <!-- <button class="film-menu">Dodaj użytkownika</button> -->
+        <h4>Wyświetlanie postów</h4>
+
         <h2></h2>
-        <form action="film_delete.php#about" method="post">
+        <form action="post_read.php#about" method="get" enctype="multipart/form-data">
             <p>Podaj login: <input name="login" type="text"/></p>
-            <p>Podaj hasło: <input name="pass" type="password"/></p><br>
-            <p>Podaj film, który chcesz usunąć z twojej bazy:<br> <input name="name" type="text"/></p>
-            <input type="submit" name="del_button" value="Usuń film" id="submit">
+            <p>Podaj hasło: <input name="pass" type="password"/></p>
+
+            <!-- <input type="file" name="fileIMG" id="fileIMG" accept="image/jpeg, image/png, image/jpg" />
+            <input type="text" name="userText" id="userText" /><br> -->
+            <button type="submit" name="display" id="submitIMG">Wyświetl</button>
         </form>
+        <h2></h2>
         <?php
-        if (isset($_POST['del_button']) && isset($_POST['login']) && isset($_POST['pass'])) { 
-            $user = $_POST['login'];
-            $pass = $_POST['pass'];
-            $film = $_POST['name'];
+        if (isset($_GET['login']) && isset($_GET['pass']) && isset($_GET['display'])) {
+            $user = $_GET['login'];
+            $pass = $_GET['pass'];
 
             require_once('connectBD.php');
             // Check connection
@@ -85,7 +86,7 @@
             die("Connection failed: " . mysqli_connect_error());
             }
             // "LOGOWANIE"
-            $q = "SELECT * FROM uzytkownicy WHERE name='" . $user . "'";
+            $q = "SELECT * FROM uzytkownicy WHERE nazwa='" . $user . "'";
             $r = @mysqli_query($conn, $q);
             if (mysqli_num_rows($r) > 0) {
                 while($row = mysqli_fetch_array($r)) {
@@ -103,20 +104,68 @@
                 echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
                 $logged_in = false;
             }
-            // "USUSWANIE FILMOW"
-            if ($logged_in){
-                $q = "DELETE FROM filmy WHERE (user_id='" . $read_user_id . "' AND title='".$film."')";
+
+            // JEŚLI ZALOGOWANY
+            if ($logged_in == true) {
+                $q = "SELECT * FROM posty ORDER BY nazwa DESC"; //WHERE user_id=" . $read_user_id;
                 $r = @mysqli_query($conn, $q);
-                if ($r) {
-                  echo "<h4>Pomyślnie usunięto film ".$film."!</h4>";
+                if (mysqli_num_rows($r) > 0) {
+                    while($row = mysqli_fetch_array($r)) {
+                        echo "<br><p>";
+                        echo "<span class = 'filmtitle'>";
+                        echo $row["nazwa"] . "<br>";
+                        echo "</span>";
+                        echo "<span class = 'filmdetails'>";
+                        echo $row["tekst"] . "<br>";
+                        echo "<div class='google-maps'>";
+                        echo "<a href='".$row['img_dir']."' data-lightbox='mygallery' data-title='Nowy obrazek'><img src='".$row['img_dir']."' alt='kotek' class='thumbnail'></a>";
+                        echo "</div>";
+                        echo "</span>";
+                        echo "</p>";
+                    }
+                } else {
+                    echo "<p>Brak danych do wyświetlenia.</p>";
                 }
-                else {
-                    echo "Error" . mysqli_error($conn);
-                }
-                $conn->close();
-              }
+                // Sprawdzanie, czy plik został przesłany
+                // if (isset($_FILES['fileIMG']) && $_FILES['fileIMG']['error'] === UPLOAD_ERR_OK) {
+                //     $uploadDir = 'img/uploads/'; // Katalog docelowy
+                //     $uploadFile = $uploadDir . basename($_FILES['fileIMG']['name']);
+
+                //     // Sprawdzanie, czy plik jest obrazem
+                //     $fileType = mime_content_type($_FILES['fileIMG']['tmp_name']);
+                //     if (in_array($fileType, ['image/jpeg', 'image/png', 'image/jpg'])) {
+                //         // Przeniesienie pliku do docelowego katalogu
+                //         if (move_uploaded_file($_FILES['fileIMG']['tmp_name'], $uploadFile)) {
+                //             echo "<div class='google-maps'>";
+                //             echo "<a href='".$uploadFile."' data-lightbox='mygallery' data-title='Nowy obrazek'><img src='".$uploadFile."' alt='kotek' class='thumbnail'></a>";
+                //             echo "</div>";
+                //             // echo $uploadFile;
+                //             $title = "post_".date('Y-m-d_H:i:s');
+                //             // echo $title;
+                //             $userText = trim($_POST['userText']); // Usuń białe znaki z początku i końca
+                //             if (!empty($userText)) {
+                //                 // Zabezpieczenie przed atakami XSS
+                //                 $safeText = htmlspecialchars($userText, ENT_QUOTES, 'UTF-8');
+            
+                //                 // Wyświetlenie tekstu na stronie
+                //                 echo "<p>$safeText</p>";
+                //             } else {
+                //                 echo "<p>Proszę wpisać jakiś tekst.</p>";
+                //             }
+                //         } else {
+                //             echo "Wystąpił problem podczas przesyłania pliku.";
+                //         }
+                //     } else {
+                //         echo "Nieprawidłowy format pliku. Wybierz plik JPG lub PNG.";
+                //     }
+                // } else {
+                //     echo "Nie wybrano pliku lub wystąpił błąd.";
+                // }
+            }
         }
-        ?> 
+        ?>
+
+
     <div class="col-sm-4">
     </div>
   </div>
@@ -132,9 +181,9 @@
       <p><span class="glyphicon glyphicon-envelope"></span> s185801@student.pg.edu.pl</p>
     </div>
     <div class="col-sm-7 slideanim">
-    <div class="google-maps">
+      <div class="google-maps">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2608.489232726419!2d18.615800351979498!3d54.37642734153131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd749704dcf0f3%3A0x53f69bae12ca3e75!2sMy%20Kebab!5e0!3m2!1spl!2spl!4v1734826888041!5m2!1spl!2spl" width="800" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>    
+      </div>
     </div> 
   </div>
 </div>

@@ -42,11 +42,13 @@
                 <li><a href="film_useradd.php">Dodaj użytkownika</a></li>
             </ul>
         </li>
+        <li><a class="navbar-brand" href="post_write.php"><span class="glyphicon glyphicon-pencil"></span> Skryba</a></li>  
+        <li><a class="navbar-brand" href="post_read.php"><span class="glyphicon glyphicon-book"></span> Posty</a></li>  
         <!-- <li><a href="#about">ABOUT</a></li>
         <li><a href="#services">SERVICES</a></li>
         <li><a href="#portfolio">PORTFOLIO</a></li>
         <li><a href="#pricing">PRICING</a></li> -->
-        <li><a class="navbar-brand" href="https://tictactoe9x9-4b12b.web.app/" target="_blank"><span class="glyphicon glyphicon-th"></span> Fajna giera</a></li>  
+        <li><a class="navbar-brand" href="https://tictactoe9x9-4b12b.web.app/" target="_blank"><span class="glyphicon glyphicon-th"></span> Gra</a></li>  
         <li><a class="navbar-brand" href="#contact"><span class="glyphicon glyphicon-envelope"></span> Kontakt</a></li>
       </ul>
     </div>
@@ -70,6 +72,7 @@
             <p>Podaj hasło: <input name="pass" type="password"/></p> 
             <input type="submit" name="show_button" value="Zaloguj się i pokaż filmy" id="submit">
         </form>
+        
         <?php
         if (isset($_GET['show_button']) && isset($_GET['login']) && isset($_GET['pass'])) { 
             $user = $_GET['login'];
@@ -103,6 +106,8 @@
             // "WYSWIETLANIE FILMOW"
             if ($logged_in){
               if ($user == 'admin') { // DISPLAY ADMIN DATA
+                $menu = array();
+                $users = array();
                 $q1 = "SELECT DISTINCT nazwa FROM uzytkownicy WHERE id!=4";
                 $q2 = "SELECT u.nazwa, f.title, f.year, f.rating FROM filmy f JOIN uzytkownicy u ON f.user_id=u.id WHERE user_id!=4";
                 $r1 = @mysqli_query($conn, $q1);
@@ -111,7 +116,10 @@
                   echo "<span class = 'filmdetails'>";
                   echo "<p>Dostępni użytkownicy:";
                   echo "<br><ul class='db-users'>";  
-                  while($row = mysqli_fetch_array($r1)) { echo "<li>" . $row["nazwa"] . "</li>"; }
+                  while($row = mysqli_fetch_array($r1)) { 
+                    echo "<li>" . $row["nazwa"] . "</li>"; 
+                    array_push($users, $row['nazwa']);
+                  }
                   echo "</ul></p><br>";
                   echo "</span>";
                 }
@@ -133,7 +141,27 @@
                         echo "Użytkownik: ".$row["nazwa"];  
                         echo "</span>";
                         echo "</p><br>";
+                        $linkto = "https://www.google.com/search?ie=UTF-8&q=".$row['title'];
+                        $menu[$linkto] = $row['title']; // dane do dynamicznego menu link+film
                     }
+                    echo "<span class = 'filmdetails'>";
+                    echo "<p>Więcej o filmach użytkowników</p>";
+                    echo "<ul class='details'>";
+                    echo "<li class='dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href='#' id='filmy'>Filmy <span class='carret'></span></a>";
+                    echo "<ul class='dropdown-menu'>";
+                    foreach ($menu as $key => $value):
+                    echo "<li><a target=_blank href='".$key."'>".$value."</a></li>";
+                    endforeach;
+                    echo "</ul></li>";
+
+                    echo "<li class='dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href='#' id='users'>Dostępni użytkownicy<span class='carret'></span></a>";
+                    echo "<ul class='dropdown-menu'>"; 
+                    foreach ($users as $value):
+                    echo "<li><p>".$value."</p></li>";
+                    endforeach;
+                    echo "</ul></li>";
+                    echo "</ul><br><br>";
+                    echo "</span>";
                 } else {
                     echo "<p>Brak danych do wyświetlenia.</p>";
                 }
@@ -152,6 +180,8 @@
                             echo "<span class='glyphicon glyphicon-star gold'></span>  ";
                         }
                         echo $row["rating"] . "/5<br>";
+                        $linkto = "https://www.google.com/search?ie=UTF-8&q=".str_replace(' ', '+', $row['title']);
+                        echo "<a target=_blank href=".$linkto.">Więcej</a>";
                         echo "</span>";
                         echo "</p>";
                     }

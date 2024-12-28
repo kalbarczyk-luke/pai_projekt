@@ -41,11 +41,13 @@
               <li><a href="film_useradd.php">Dodaj użytkownika</a></li>
           </ul>
         </li>
+        <li><a class="navbar-brand" href="post_write.php"><span class="glyphicon glyphicon-pencil"></span> Skryba</a></li>  
+        <li><a class="navbar-brand" href="post_read.php"><span class="glyphicon glyphicon-book"></span> Posty</a></li>  
         <!-- <li><a href="#about">ABOUT</a></li>
         <li><a href="#services">SERVICES</a></li>
         <li><a href="#portfolio">PORTFOLIO</a></li>
         <li><a href="#pricing">PRICING</a></li> -->
-        <li><a class="navbar-brand" href="https://tictactoe9x9-4b12b.web.app/" target="_blank"><span class="glyphicon glyphicon-th"></span> Fajna giera</a></li>  
+        <li><a class="navbar-brand" href="https://tictactoe9x9-4b12b.web.app/" target="_blank"><span class="glyphicon glyphicon-th"></span> Gra</a></li>  
         <li><a class="navbar-brand" href="#contact"><span class="glyphicon glyphicon-envelope"></span> Kontakt</a></li>
       </ul>
     </div>
@@ -94,7 +96,9 @@
     <div class="col-sm-8">
       <h2>O projekcie PAI</h2>
       <h4>Niniejsza strona internetowa jest projektem zaliczeniowym przedmiotu PAI w roku akademickim 2024/25. <br/>Autorami strony są <b>Łukasz Kalbarczyk (185662)</b> i <b>Łukasz Krysztofik (185801)</b>.</h4>
-      <p>Strona oparta jest na HTML+CSS z wykorzystaniem Bootstrap. Do <i>estetycznego</i> wyświetlania zdjęć wykorzystano skrypt Lightbox oraz obiekt typu Karuzela. Zaimplementowano również bazę danych MySQL pozwalającą na archiwizowanie obejrzanych filmów. Do bazy danych można dodawać nowe filmy oraz nowych użytkowników. Użytkownik może zalogować się i wyświetlić swoje filmy. Ponadto może on usunąć dodane wcześniej filmy.</p>
+      <p>Strona oparta jest na HTML+CSS z wykorzystaniem Bootstrap. Do <i>estetycznego</i> wyświetlania zdjęć wykorzystano skrypt Lightbox oraz obiekt typu Karuzela.</p> 
+      <p>Zaimplementowano również bazę danych MySQL pozwalającą na archiwizowanie obejrzanych filmów. Do bazy danych można dodawać nowe filmy oraz nowych użytkowników. Użytkownik może zalogować się i wyświetlić swoje filmy. Ponadto może on usunąć dodane wcześniej filmy. Dodany został użytkownik-administrator, który ma możliwość wyświetlania danych wszystkich użytkowników. Zastosowano tutaj również skrypt PHP, dynamicznie tworzący rozwijane menu wszystkich filmów z bazy danych.</p>
+      <p>W ramach elementu CMS dodano możliwość funkcjonalność blogu, pozwalającą na dodawanie postów (tekst+zdjęcie) oraz ich następne wyświetlanie na stronie.</p>
       <!-- <a href="https://eia.pg.edu.pl" target="_blank"><button class="btn btn-default btn-lg">Nauka</button></a>
       <a href="https://tictactoe9x9-4b12b.web.app/" target="_blank"><button class="btn btn-default btn-lg">Zabawa</button></a>
       <a href="https://youtu.be/dwY7w0k3j2Y?si=aRKkbOzxFpT0rOqC" target="_blank"><button class="btn btn-default btn-lg">Relaks</button></a> -->
@@ -123,7 +127,7 @@
       <span class="glyphicon glyphicon-hdd logo-small"></span>
       <h4>BAZA DANYCH + PHP</h4>
       <p>Dodawanie nowych rekordów</p>
-      <p>Wyświetlanie zawartych danych na stronie</p>
+      <p>Dynamiczne wyświetlanie danych na stronie</p>
       <p>Dodawanie i usuwanie danych</p>
     </div>
     <div class="col-sm-4">
