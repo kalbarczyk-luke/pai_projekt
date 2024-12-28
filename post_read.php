@@ -56,8 +56,8 @@
 </nav>
 
 <div class="jumbotron text-center">
-  <h1>Sandbox</h1>
-  <h3>Elementy CMS - dodawanie obrazka do strony.</h3>
+  <h1>Posty</h1>
+  <h3>Elementy CMS - wyświetlanie postów (zdjęcie+tekst).</h3>
 </div>
 
 <div id="about" class="container-fluid">

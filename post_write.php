@@ -56,14 +56,14 @@
 </nav>
 
 <div class="jumbotron text-center">
-  <h1>Sandbox</h1>
-  <h3>Elementy CMS - dodawanie obrazka do strony.</h3>
+  <h1>Napisz post</h1>
+  <h3>Elementy CMS - dodawanie postów (zdjęcie+tekst).</h3>
 </div>
 
 <div id="about" class="container-fluid">
   <div class="row">
     <div class="col-sm-8">
-        <h4>Dodawanie obrazka i tekstu</h4>
+        <h4>Dodawanie posta</h4>
 
         <h2></h2>
         <form action="post_write.php#about" method="post" enctype="multipart/form-data">
@@ -71,7 +71,8 @@
             <p>Podaj hasło: <input name="pass" type="password"/></p>
 
             <input type="file" name="fileIMG" id="fileIMG" accept="image/jpeg, image/png, image/jpg" />
-            <input type="text" name="userText" id="userText" /><br>
+            <!-- <input type="text" name="userText" id="userText" /><br> -->
+            <textarea id="userText" name="userText" rows="4" cols="50"></textarea>
             <button type="submit" name="upload" id="submitIMG">Dodaj</button>
         </form>
         <h2></h2>
