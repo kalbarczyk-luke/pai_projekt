@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <!-- Theme Made By www.w3schools.com -->
+  <!-- Theme Inspired By www.w3schools.com -->
   <title>PAI - PROJEKT</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +31,6 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <!-- <li><a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li> -->
         <li><a class="navbar-brand" href="galeria.html"><span class="glyphicon glyphicon-picture"></span> Galeria</a></li>  
         <li class="dropdown">
             <a class="navbar-brand" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-facetime-video"></span> Filmy<span class="carret"></span></a>
@@ -44,10 +43,6 @@
         </li>
         <li><a class="navbar-brand" href="post_write.php"><span class="glyphicon glyphicon-pencil"></span> Skryba</a></li>  
         <li><a class="navbar-brand" href="post_read.php"><span class="glyphicon glyphicon-book"></span> Posty</a></li>  
-        <!-- <li><a href="#about">ABOUT</a></li>
-        <li><a href="#services">SERVICES</a></li>
-        <li><a href="#portfolio">PORTFOLIO</a></li>
-        <li><a href="#pricing">PRICING</a></li> -->
         <li><a class="navbar-brand" href="https://tictactoe9x9-4b12b.web.app/" target="_blank"><span class="glyphicon glyphicon-th"></span> Gra</a></li>  
         <li><a class="navbar-brand" href="#contact"><span class="glyphicon glyphicon-envelope"></span> Kontakt</a></li>
       </ul>
@@ -65,7 +60,6 @@
   <div class="row">
     <div class="col-sm-8">
         <h4>Dodaj film - Logowanie</h4>
-        <!-- <button class="film-menu">Dodaj użytkownika</button> -->
         <h2></h2>
         <form action='film_add.php#about' method='post'>
             <br>
@@ -84,7 +78,6 @@
             $title = $_POST['tytul'];
             $year = $_POST['rok'];
             $rating = $_POST['ocena'];
-            // echo $user . $title . $year . $rating;
 
             require_once('connectBD.php');
             // Check connection
@@ -130,7 +123,6 @@
   </div>
 </div>
 
-<!-- Container (Contact Section) -->
 <div id="contact" class="container-fluid bg-grey">
   <h2 class="text-center">KONTAKT</h2>
   <div class="row">

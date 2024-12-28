@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <!-- Theme Made By www.w3schools.com -->
+  <!-- Theme Inspired By www.w3schools.com -->
   <title>PAI - PROJEKT</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +31,6 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <!-- <li><a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li> -->
         <li><a class="navbar-brand" href="galeria.html"><span class="glyphicon glyphicon-picture"></span> Galeria</a></li>  
         <li class="dropdown">
             <a class="navbar-brand" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-facetime-video"></span> Filmy<span class="carret"></span></a>
@@ -44,10 +43,6 @@
         </li>
         <li><a class="navbar-brand" href="post_write.php"><span class="glyphicon glyphicon-pencil"></span> Skryba</a></li>  
         <li><a class="navbar-brand" href="post_read.php"><span class="glyphicon glyphicon-book"></span> Posty</a></li>  
-        <!-- <li><a href="#about">ABOUT</a></li>
-        <li><a href="#services">SERVICES</a></li>
-        <li><a href="#portfolio">PORTFOLIO</a></li>
-        <li><a href="#pricing">PRICING</a></li> -->
         <li><a class="navbar-brand" href="https://tictactoe9x9-4b12b.web.app/" target="_blank"><span class="glyphicon glyphicon-th"></span> Gra</a></li>  
         <li><a class="navbar-brand" href="#contact"><span class="glyphicon glyphicon-envelope"></span> Kontakt</a></li>
       </ul>
@@ -69,9 +64,6 @@
         <form action="post_read.php#about" method="get" enctype="multipart/form-data">
             <p>Podaj login: <input name="login" type="text"/></p>
             <p>Podaj hasło: <input name="pass" type="password"/></p>
-
-            <!-- <input type="file" name="fileIMG" id="fileIMG" accept="image/jpeg, image/png, image/jpg" />
-            <input type="text" name="userText" id="userText" /><br> -->
             <button type="submit" name="display" id="submitIMG">Wyświetl</button>
         </form>
         <h2></h2>
@@ -97,11 +89,11 @@
                     echo "<h4>Zalogowano jako ".$user."</h4>";
                     $logged_in = true;
                 } else {
-                    echo "<h4>Podano błędne hasło!</h4>";
+                    echo "<p id='error'>Podano błędne hasło!</p>";
                     $logged_in = false;
                 }
             } else {
-                echo "<h4>Uzytkownik o podanej nazwie nie istnieje!</h4>";
+                echo "<p id='error'>Uzytkownik o podanej nazwie nie istnieje!</p>";
                 $logged_in = false;
             }
 
@@ -124,54 +116,14 @@
                         echo "</p>";
                     }
                 } else {
-                    echo "<p>Brak danych do wyświetlenia.</p>";
+                    echo "<p id='error'>Brak danych do wyświetlenia.</p>";
                 }
-                // Sprawdzanie, czy plik został przesłany
-                // if (isset($_FILES['fileIMG']) && $_FILES['fileIMG']['error'] === UPLOAD_ERR_OK) {
-                //     $uploadDir = 'img/uploads/'; // Katalog docelowy
-                //     $uploadFile = $uploadDir . basename($_FILES['fileIMG']['name']);
-
-                //     // Sprawdzanie, czy plik jest obrazem
-                //     $fileType = mime_content_type($_FILES['fileIMG']['tmp_name']);
-                //     if (in_array($fileType, ['image/jpeg', 'image/png', 'image/jpg'])) {
-                //         // Przeniesienie pliku do docelowego katalogu
-                //         if (move_uploaded_file($_FILES['fileIMG']['tmp_name'], $uploadFile)) {
-                //             echo "<div class='google-maps'>";
-                //             echo "<a href='".$uploadFile."' data-lightbox='mygallery' data-title='Nowy obrazek'><img src='".$uploadFile."' alt='kotek' class='thumbnail'></a>";
-                //             echo "</div>";
-                //             // echo $uploadFile;
-                //             $title = "post_".date('Y-m-d_H:i:s');
-                //             // echo $title;
-                //             $userText = trim($_POST['userText']); // Usuń białe znaki z początku i końca
-                //             if (!empty($userText)) {
-                //                 // Zabezpieczenie przed atakami XSS
-                //                 $safeText = htmlspecialchars($userText, ENT_QUOTES, 'UTF-8');
-            
-                //                 // Wyświetlenie tekstu na stronie
-                //                 echo "<p>$safeText</p>";
-                //             } else {
-                //                 echo "<p>Proszę wpisać jakiś tekst.</p>";
-                //             }
-                //         } else {
-                //             echo "Wystąpił problem podczas przesyłania pliku.";
-                //         }
-                //     } else {
-                //         echo "Nieprawidłowy format pliku. Wybierz plik JPG lub PNG.";
-                //     }
-                // } else {
-                //     echo "Nie wybrano pliku lub wystąpił błąd.";
-                // }
             }
         }
         ?>
-
-
-    <div class="col-sm-4">
-    </div>
   </div>
 </div>
 
-<!-- Container (Contact Section) -->
 <div id="contact" class="container-fluid bg-grey">
   <h2 class="text-center">KONTAKT</h2>
   <div class="row">
