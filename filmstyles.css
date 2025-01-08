@@ -1,7 +1,7 @@
 .filmtitle {
   color: #f4511e;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .filmdetails {
@@ -21,6 +21,7 @@
 
 #filmy, #users {
   color: #f4511e;
+
 }
 
 #submit {

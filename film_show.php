@@ -66,7 +66,8 @@
             <p>Podaj hasło: <input name="pass" type="password"/></p> 
             <input type="submit" name="show_button" value="Zaloguj się i pokaż filmy" id="submit">
         </form>
-        
+</div>  
+<div class="col-sm-8">  
         <?php
         if (isset($_GET['show_button']) && isset($_GET['login']) && isset($_GET['pass'])) { 
             $user = $_GET['login'];
@@ -103,7 +104,8 @@
                 $menu = array();
                 $users = array();
                 $q1 = "SELECT DISTINCT nazwa FROM uzytkownicy WHERE id!=4";
-                $q2 = "SELECT u.nazwa, f.title, f.year, f.rating FROM filmy f JOIN uzytkownicy u ON f.user_id=u.id WHERE user_id!=4";
+                $q2 = "SELECT u.nazwa, f.title, f.year, f.rating FROM filmy f JOIN uzytkownicy u ON f.user_id=u.id WHERE user_id!=4 ORDER BY f.rating DESC";
+                $q3 = "SELECT title, AVG(rating) AS srednia FROM filmy ORDER BY srednia DESC";
                 $r1 = @mysqli_query($conn, $q1);
                 $r2 = @mysqli_query($conn, $q2);
                 if (mysqli_num_rows($r1) > 0) {
@@ -163,6 +165,7 @@
                 $q = "SELECT * FROM filmy WHERE user_id=" . $read_user_id;
                 $r = @mysqli_query($conn, $q);
                 if (mysqli_num_rows($r) > 0) {
+                    echo "<br><h2>TWOJE FILMY</h2>";
                     while($row = mysqli_fetch_array($r)) {
                         echo "<br><p>";
                         echo "<span class = 'filmtitle'>";
@@ -182,13 +185,54 @@
                 } else {
                     echo "<p>Brak danych do wyświetlenia.</p>";
                 }
+
               }
-              $conn->close();
+              
             }
         }
         ?> 
-    <div class="col-sm-4">
-    </div>
+      </div>
+      <div class="col-sm-4">
+        <?php
+            require_once('connectBD.php');
+            // Check connection
+            if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+            }
+            $qq = "SELECT title, AVG(rating) AS srednia FROM filmy GROUP BY title ORDER BY srednia DESC";
+            $rr = @mysqli_query($conn, $qq);
+            if (mysqli_num_rows($rr) > 0) {
+              echo "<br><br><br><br><h2>RANKING FILMÓW UŻYTKOWNIKÓW</h2>";
+              $rank = 1 ;
+              while($rrow = mysqli_fetch_array($rr)) {
+                  echo "<p>";
+                  echo "<span class = 'filmtitle'>";
+                  echo "#". $rank . " - ". $rrow["title"] ."<br>";
+                  echo "</span>";
+                  echo "<span class = 'filmdetails'>";
+                  echo "<p>Średnia ocen użytkowników:<br>";
+                  for ($x = 1; $x <= $rrow["srednia"]; $x++) {
+                      echo "<span class='glyphicon glyphicon-star gold'></span>  ";
+                  }
+                  if (floor( $rrow["srednia"]) != $rrow["srednia"]) {
+                    echo "<svg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='gold' class='bi bi-star-half' viewBox='0 0 16 16'>
+                    <path d='M5.354 5.119 7.538.792A.52.52 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.54.54 0 0 1 16 6.32a.55.55 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.5.5 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.6.6 0 0 1 .085-.302.51.51 0 0 1 .37-.245zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.56.56 0 0 1 .162-.505l2.907-2.77-4.052-.576a.53.53 0 0 1-.393-.288L8.001 2.223 8 2.226z'/>
+                    </svg>";
+                  }
+
+                  echo " ".round($rrow["srednia"], 2) . "/5";
+                  $linkto = "https://www.google.com/search?ie=UTF-8&q=".str_replace(' ', '+', $rrow['title']);
+                  echo "<br><a target=_blank href=".$linkto.">Więcej</a></p>";
+                  echo "</span>";
+                  echo "</p><br>";
+                  $rank = $rank + 1;
+              }
+          } else {
+              echo "<p>Brak danych do wyświetlenia.</p>";
+          }
+          $conn->close();
+        ?>
+      </div>
   </div>
 </div>
 
